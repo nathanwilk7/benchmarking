@@ -1,0 +1,5 @@
+locust
+mlflow
+psycopg2
+psycogreen
+redis
