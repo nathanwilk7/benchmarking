@@ -24,6 +24,12 @@ LOCUST_INSERT_SELECT_POSTGRES=SETUP LOCUST_INSERT_SELECT_ECHOGREP=SETUP LOCUST_I
 
 python benchmark.py
 
+localhost:8089
+
+# metrics
+
+mlflow ui
+
 # name ideas
 
 anciano
