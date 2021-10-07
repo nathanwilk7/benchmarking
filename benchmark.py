@@ -10,7 +10,9 @@ import mlflow # TODO abstract out mlflow
 
 setup_logging("INFO", None)
 # TODO CLI pass in benchmark name and benchmark name? And automatically get benchmark_name/implementation_name
-implementation = getattr(importlib.import_module('benchmarks.key_existence.implementations.echogrep'), 'EchoGrep')
+m = importlib.import_module('benchmarks.key_existence.implementations.echogrep')
+implementation = getattr(m, 'EchoGrep')
+setup = getattr(m, 'SETUP')()
 env = Environment(user_classes=[implementation])
 env.create_local_runner()
 env.create_web_ui("127.0.0.1", 8089) # TODO CLI pass in port
@@ -24,6 +26,7 @@ env.runner.greenlet.join()
 
 with mlflow.start_run():
     # TODO require no uncommitted?
+    # TODO "version" metrics schema? How to organize mlruns?
     mlflow.log_param('git_repo_name', 'ddia') # basename `git rev-parse --show-toplevel`
     # TODO log benchmark and implementation
     mlflow.log_param('client', 'redis') # use case, test, query/func set, etc

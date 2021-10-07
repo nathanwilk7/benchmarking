@@ -12,6 +12,10 @@ class KeyExistence(User):
 		# TODO init implementation to reset stuff? How to spin up infra like docker
 		super().__init__(environment)
 		self.request_event = environment.events.request
+		self.setup()
+
+	def setup(self): # TODO separate out user startup vs app startup?
+		pass
 
 	@task
 	def insert_helper(self):
