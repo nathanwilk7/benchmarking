@@ -21,10 +21,10 @@ docker run -it --network host --rm redis redis-cli -p 6380
 LOCUST_INSERT_SELECT_POSTGRES=SETUP LOCUST_INSERT_SELECT_ECHOGREP=SETUP LOCUST_INSERT_SELECT_SQLITE=SETUP LOCUST_INSERT_SELECT_REDIS=SETUP python locustfile.py
 
 # run
-locust
 
-The unbenchmarked design is not worth designing
+python benchmark.py
 
 # name ideas
 
 anciano
+The unbenchmarked design is not worth designing
