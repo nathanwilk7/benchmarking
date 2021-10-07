@@ -5,16 +5,18 @@ import benchmarks.utils as u
 
 class KeyExistence(User):
 	abstract = True
-	benchmark_name = 'KeyExistence' # TODO use filepath/module name?
 	wait_time = between(0.1, 0.2)
 
+	# NOTE multiple inheritence/composition/other? avoid duplicating init/setup/teardown for all benchmark classes?
 	def __init__(self, environment):
-		# TODO init implementation to reset stuff? How to spin up infra like docker
 		super().__init__(environment)
 		self.request_event = environment.events.request
-		self.setup()
+		self.user_setup()
 
-	def setup(self): # TODO separate out user startup vs app startup?
+	def environment_setup():
+		pass
+
+	def user_setup(self):
 		pass
 
 	@task
@@ -26,7 +28,14 @@ class KeyExistence(User):
 
 	@task
 	def select_helper(self):
+		# TODO check that select results are correct?
 		u.do_task(self, 'select', self.select)
 
 	def select(self):
 		raise NotImplementedError()
+
+	def user_teardown(self):
+		pass
+
+	def environment_teardown():
+		pass

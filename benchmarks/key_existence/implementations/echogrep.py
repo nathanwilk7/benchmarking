@@ -4,20 +4,15 @@ import subprocess
 import benchmarks.key_existence as k
 
 
-# TODO immutable or use tracking?
 class EchoGrep(k.KeyExistence):
-	implementation_name = 'EchoGrep' # TODO use filename instead?
-
-	def setup(self):
-		print('setup')
+	def environment_setup():
+		with open('echogrep.txt', 'w') as w:
+			for i in range(10):
+				w.write(f'{i}\n')
 
 	def insert(self):
-		subprocess.run(f"echo '{random.randint(1, 100000)}' >> echogrep.txt", shell=True, check=True, stdout=subprocess.DEVNULL)
+		subprocess.run(f"echo '{random.randint(1, 10)}' >> echogrep.txt", shell=True, check=True, stdout=subprocess.DEVNULL)
 
 	def select(self):
-		temp_id = random.randint(1, 100000)
+		temp_id = random.randint(1, 10)
 		subprocess.run(f"grep {temp_id} echogrep.txt | sed -e 's/^{temp_id},//' | tail -n 1", shell=True, check=True, stdout=subprocess.DEVNULL)
-
-
-def SETUP():
-	print('SETUP!!!')
