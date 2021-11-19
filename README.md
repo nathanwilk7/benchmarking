@@ -34,3 +34,5 @@ mlflow ui
 
 anciano
 The unbenchmarked design is not worth designing
+
+# TODO rocksdb vs leveldb vs lmdb vs etc
