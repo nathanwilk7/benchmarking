@@ -10,7 +10,6 @@ import mlflow # NOTE abstract out mlflow
 # NOTE tests, configuration/secrets, comments, best practices, etc
 
 
-
 setup_logging("INFO", None)
 # NOTE CLI pass in benchmark name and benchmark name? And automatically get benchmark_name/implementation_name
 m = importlib.import_module('benchmarks.key_existence.implementations.echogrep')
@@ -23,10 +22,10 @@ try:
     env = Environment(user_classes=[implementation])
     env.create_local_runner()
     env.create_web_ui("127.0.0.1", 8089) # NOTE CLI pass in port
-    user_count = 20 # NOTE CLI?
-    spawn_rate_per_s = 5 # NOTE CLI?
+    user_count = 2 # NOTE CLI?
+    spawn_rate_per_s = 1 # NOTE CLI?
     env.runner.start(user_count, spawn_rate=spawn_rate_per_s)
-    duration_s = 60 # NOTE CLI?
+    duration_s = 5 # NOTE CLI?
     gevent.spawn_later(duration_s, lambda: env.runner.quit())
     env.runner.greenlet.join()
     env.web_ui.stop()
