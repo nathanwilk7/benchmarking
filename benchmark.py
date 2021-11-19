@@ -10,14 +10,22 @@ import mlflow # NOTE abstract out mlflow
 # NOTE tests, configuration/secrets, comments, best practices, etc
 
 
+# TODO start using issues/projects/trello/etc instead of TODO's in code
+# TODO __name__ thing for CLI's?
+
 
 setup_logging("INFO", None)
+
 # NOTE CLI pass in benchmark name and benchmark name? And automatically get benchmark_name/implementation_name
-m = importlib.import_module('benchmarks.key_existence.implementations.echogrep')
-implementation = getattr(m, 'EchoGrep')
+benchmark_name = 'key_existence'
+implementation_name = 'Postgres'
+implementation_class = implementation_name
+
+m = importlib.import_module(f'benchmarks.{benchmark_name}.implementations.{implementation_name}')
+implementation = getattr(m, implementation_class)
 implementation.benchmark_module = 'key_existence'
-implementation.implementation_module = 'echogrep'
-implementation.implementation_class = 'EchoGrep'
+implementation.implementation_module = implementation_name
+implementation.implementation_class = implementation_class
 try:
     implementation.environment_setup()
     env = Environment(user_classes=[implementation])
@@ -68,6 +76,7 @@ with mlflow.start_run():
             mlflow.log_metric('max_response_time_ms', max_response_time_ms)
             mlflow.log_metric('min_response_time_ms', min_response_time_ms)
             # NOTE percentile metrics or other useful numbers
+            # TODO timestamp
 
     mlflow.log_metric('total_user_avg_response_time_ms', total_user_avg_response_time_ms)
     # NOTE if files exist, log

@@ -18,13 +18,12 @@ docker run -p 6380:6379 --rm --name some-redis redis
 docker run -it --network host --rm redis redis-cli -p 6380
 
 # setup
-LOCUST_INSERT_SELECT_POSTGRES=SETUP LOCUST_INSERT_SELECT_ECHOGREP=SETUP LOCUST_INSERT_SELECT_SQLITE=SETUP LOCUST_INSERT_SELECT_REDIS=SETUP python locustfile.py
+python locustfile.py
 
 # run
-
 python benchmark.py
 
-localhost:8089
+http://localhost:8089
 
 # metrics
 
@@ -34,5 +33,6 @@ mlflow ui
 
 anciano
 The unbenchmarked design is not worth designing
+benchmark the living daylights out of everything all of the time
 
-# TODO rocksdb vs leveldb vs lmdb vs etc
+# TODO postgres vs sqlite vs rocksdb vs leveldb vs lmdb vs redis, etc
