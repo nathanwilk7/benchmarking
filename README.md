@@ -34,5 +34,3 @@ mlflow ui
 anciano
 The unbenchmarked design is not worth designing
 benchmark the living daylights out of everything all of the time
-
-# TODO postgres vs sqlite vs rocksdb vs leveldb vs lmdb vs redis, etc

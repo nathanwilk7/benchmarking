@@ -8,7 +8,7 @@ def request_event_fire(request_event, request_type, name, start_time, end_time):
         "response_length": 1,
         "response": 2,
         "context": {},
-        "exception": None, # NOTE mark exceptions? Other things?
+        "exception": None,
         "response_time": (end_time - start_time) * 1000,
     }
     request_event.fire(**request_meta)
