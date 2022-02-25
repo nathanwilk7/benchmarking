@@ -2,3 +2,4 @@ venv/
 echogrep.txt
 mlruns/
 __pycache__
+*.swp
