@@ -10,7 +10,7 @@ import mlflow
 if __name__ == '__main__':
 
     # CONFIG
-    benchmark_name = 'key_existence'
+    benchmark_name = 'ddia_ch1_twitter_timeline'
     implementation_name = 'Postgres'
     implementation_class = implementation_name
     # END CONFIG
@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
     m = importlib.import_module(f'benchmarks.{benchmark_name}.implementations.{implementation_name}')
     implementation = getattr(m, implementation_class)
-    implementation.benchmark_module = 'key_existence'
+    implementation.benchmark_module = benchmark_name
     implementation.implementation_module = implementation_name
     implementation.implementation_class = implementation_class
     try:
@@ -27,10 +27,10 @@ if __name__ == '__main__':
         env = Environment(user_classes=[implementation])
         env.create_local_runner()
         env.create_web_ui("127.0.0.1", 8089)
-        user_count = 20
+        user_count = 50
         spawn_rate_per_s = 5
         env.runner.start(user_count, spawn_rate=spawn_rate_per_s)
-        duration_s = 60
+        duration_s = 300
         gevent.spawn_later(duration_s, lambda: env.runner.quit())
         env.runner.greenlet.join()
         env.web_ui.stop()

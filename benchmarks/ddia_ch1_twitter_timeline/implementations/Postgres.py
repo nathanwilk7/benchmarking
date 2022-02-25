@@ -7,9 +7,10 @@ import time
 
 import psycopg2
 
-import benchmarks.key_existence as k
+import benchmarks.ddia_ch1_twitter_timeline as tt
 
 
+# TODO move into utils?
 def run_pg_query(q):
     host = 'localhost'
     port = 5433
@@ -22,21 +23,20 @@ def run_pg_query(q):
     return conn.commit()
 
 
-class Postgres(k.KeyExistence):
+class Postgres(tt.TwitterTimeline):
     def environment_setup():
         docker_cmd = 'docker run -p 5433:5432 --rm --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword postgres'.split()
         subprocess.Popen(docker_cmd)
-        time.sleep(7)
-        run_pg_query(k.SQL_SETUP)
+        time.sleep(10)
+        run_pg_query(tt.SQL_SETUP)
 
-    def insert(self):
-        key = random.randint(k.MIN_KEY, k.MAX_KEY)
-        run_pg_query(k.SQL_INSERT.format(key=key))
+    def create_tweet(self):
+        run_pg_query(tt.get_sql_create_tweet())
 
-    def select(self):
-        key = random.randint(k.MIN_KEY, k.MAX_KEY)
-        run_pg_query(k.SQL_SELECT.format(key=key))
+    def load_timeline(self):
+        run_pg_query(tt.get_sql_load_timeline(random.randint(1, tt.NUM_USERS)))
 
     def environment_teardown():
+        import pdb; pdb.set_trace()
         docker_cmd = 'docker kill some-postgres || true'
         subprocess.run(docker_cmd, shell=True, check=True, stdout=subprocess.DEVNULL)
