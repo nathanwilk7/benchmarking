@@ -3,6 +3,7 @@ from locust import User, task, between
 import benchmarks.utils as u
 
 
+# TODO https://www.infoq.com/presentations/Twitter-Timeline-Scalability/
 # https://www.linkedin.com/pulse/what-scalability-paolo-vernucci/
 
 
