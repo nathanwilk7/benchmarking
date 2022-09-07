@@ -3,3 +3,4 @@ mlflow
 psycopg2
 psycogreen
 redis
+pymongo

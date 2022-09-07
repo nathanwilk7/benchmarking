@@ -10,7 +10,7 @@ import mlflow
 if __name__ == '__main__':
 
     # CONFIG
-    benchmark_name = 'ddia_ch1_twitter_timeline'
+    benchmark_name = 'linkedin'
     implementation_name = 'Postgres'
     implementation_class = implementation_name
     # END CONFIG
@@ -27,10 +27,10 @@ if __name__ == '__main__':
         env = Environment(user_classes=[implementation])
         env.create_local_runner()
         env.create_web_ui("127.0.0.1", 8089)
-        user_count = 50
-        spawn_rate_per_s = 5
+        user_count = 2
+        spawn_rate_per_s = 1
         env.runner.start(user_count, spawn_rate=spawn_rate_per_s)
-        duration_s = 300
+        duration_s = 60
         gevent.spawn_later(duration_s, lambda: env.runner.quit())
         env.runner.greenlet.join()
         env.web_ui.stop()
@@ -40,7 +40,7 @@ if __name__ == '__main__':
 
     with mlflow.start_run():
         mlflow.log_param('git_repo_name', 'ddia')
-        mlflow.log_param('user', 'redis')
+        mlflow.log_param('user', 'user')
         mlflow.log_param('absolute_path', '/a/b')
         mlflow.log_param('git', 'deadbe')
         mlflow.log_param('docker', 'deadbeef')
@@ -48,7 +48,9 @@ if __name__ == '__main__':
         mlflow.log_param('python_version', sys.version)
         mlflow.log_param('user_count', user_count)
         mlflow.log_param('spawn_rate_per_s', spawn_rate_per_s)
-        mlflow.log_param('duration_s', duration_s)
+        mlflow.log_param('benchmark_name', benchmark_name)
+        mlflow.log_param('implementation_name', implementation_name)
+        mlflow.log_param('implementation_class', implementation_class)
         total_user_avg_response_time_ms = 0
         for v in env.stats.entries.values():
             with mlflow.start_run(nested=True):
